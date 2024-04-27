@@ -59,6 +59,10 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground flex flex-col flex-1;
+    @apply bg-background text-foreground flex flex-col flex-1 h-full;
   }
+}
+
+html {
+  height: 100%;
 }
