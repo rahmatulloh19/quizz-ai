@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressBar, ResultCard } from "@/components/shared";
+import { ProgressBar, QuizSubmission, ResultCard } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, X } from "lucide-react";
 import { useState } from "react";
@@ -83,6 +83,11 @@ const questions = [
   },
 ];
 
+type TypeHandleAnswer = {
+  id: number;
+  isCorrect: boolean;
+};
+
 export default function Home() {
   const [started, setStarted] = useState<boolean>(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -97,7 +102,7 @@ export default function Home() {
       return;
     }
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex((prev) => prev + 1);
     } else {
       setSubmitted(true);
     }
@@ -106,14 +111,26 @@ export default function Home() {
     setIsCorrect(null);
   };
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = (answer: TypeHandleAnswer) => {
     setSelectedAnswer(answer.id);
     const isCurrentCorrect = answer.isCorrect;
-    if (isCorrect) {
+    if (currentQuestionIndex >= score && isCurrentCorrect) {
       setScore(score + 1);
     }
     setIsCorrect(isCurrentCorrect);
   };
+
+  const scorePercentage: number = Math.round(score / questions.length) * 100;
+
+  if (submitted) {
+    return (
+      <QuizSubmission
+        score={score}
+        scorePercentage={scorePercentage}
+        totalQuestions={questions.length}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col flex-1 max-w-96 w-full m-auto h-screen gap-6">
