@@ -120,7 +120,8 @@ export default function Home() {
     setIsCorrect(isCurrentCorrect);
   };
 
-  const scorePercentage: number = Math.round(score / questions.length) * 100;
+  const scorePercentage: number = +(score / questions.length).toFixed(2) * 100;
+
 
   if (submitted) {
     return (
