@@ -1,7 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import { Bar } from ".";
 import { useEffect } from "react";
 import { useReward } from "react-rewards";
+import Bar from "./Bar";
 
 type Props = {
   scorePercentage: number;
